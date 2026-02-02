@@ -1,10 +1,10 @@
 package com.example.KodemiLabs.Model;
-
 import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
-
 import java.util.Date;
 
+
+@Data
 @DynamoDbBean
 @Getter
 @Setter

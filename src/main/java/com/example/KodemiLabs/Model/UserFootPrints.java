@@ -3,31 +3,32 @@ import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
-import java.util.Date;
-import java.util.Timer;
+import java.time.Instant;
 
+@Data
 @DynamoDbBean
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+public class UserFootPrints {
 
-
-public class OTP {
-    private Long otpCode;
+    private String sessionId;
+    private String sessionToken;
     private String userId;
-    private String purpose;
-    private Timer expire;
-    private boolean isUsed;
-    private Date verifiedAt;
+    private Boolean isActive;
+    private Instant loginTime;
+    private Instant lastActivity;
 
     @DynamoDbPartitionKey
-    public Long getOtpCode() {
-        return otpCode;
+    public String getSessionId() {
+        return sessionId;
     }
     @DynamoDbSecondaryPartitionKey(indexNames = "userId-index")
     public String getUserId() {
         return userId;
     }
+
+
 
 }

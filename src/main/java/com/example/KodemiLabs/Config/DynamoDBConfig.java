@@ -34,7 +34,7 @@ public class DynamoDBConfig {
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(
                                 "http://localhost:8000",   // http://localhost:8000
-                                d     // ap-south-1 (any value)
+                                dynamodbRegion      // ap-south-1 (any value)
                         ))
                 .withCredentials(
                         new AWSStaticCredentialsProvider(

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: KodemiLabs
+
+dynamodb:
+  access-key: 4cx9xj
+  secret-access-key: a90i5
+  endpoint: http://localhost:8000
+  region: ap-south-1

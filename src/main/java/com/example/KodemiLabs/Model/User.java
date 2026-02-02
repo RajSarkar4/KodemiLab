@@ -9,11 +9,10 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class Learner {
+public class User {
 
-    private String learnerId;
+    private String userId;
     private String name;
     private String email;
     private String username;
@@ -24,6 +23,6 @@ public class Learner {
 
     @DynamoDbPartitionKey
     public String getUserId() {
-        return learnerId;
+        return userId;
     }
 }

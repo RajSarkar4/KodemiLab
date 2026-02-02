@@ -3,7 +3,7 @@ spring:
     name: KodemiLabs
 
 dynamodb:
-  access-key: 4cx9xj
-  secret-access-key: a90i5
+  access-key: 7qffme
+  secret-access-key: b18sws
   endpoint: http://localhost:8000
   region: ap-south-1

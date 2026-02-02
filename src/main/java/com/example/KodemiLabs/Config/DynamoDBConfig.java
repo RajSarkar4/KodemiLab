@@ -25,17 +25,16 @@ public class DynamoDBConfig {
     private String dynamodbRegion;
 
     @Bean
-    public DynamoDBMapper dynamoDBMapper() {
-        return new DynamoDBMapper(buildAmazonDynamoDB());
+    public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB amazonDynamoDB) {
+        return new DynamoDBMapper(amazonDynamoDB);
     }
-
     protected AmazonDynamoDB buildAmazonDynamoDB() {
 
         return AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(
-                                dynamodbEndpoint,   // http://localhost:8000
-                                dynamodbRegion      // ap-south-1 (any value)
+                                "http://localhost:8000",   // http://localhost:8000
+                                d     // ap-south-1 (any value)
                         ))
                 .withCredentials(
                         new AWSStaticCredentialsProvider(

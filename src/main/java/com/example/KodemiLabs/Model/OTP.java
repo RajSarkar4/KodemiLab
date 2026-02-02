@@ -1,19 +1,12 @@
 package com.example.KodemiLabs.Model;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import lombok.*;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.util.Date;
 
 @DynamoDBTable(tableName = "OTP")
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@DynamoDbBean
-
-
+@Setter
 public class OTP {
 
     private Long otpCode;
@@ -23,38 +16,36 @@ public class OTP {
     private boolean isUsed;
     private Date verifiedAt;
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute("otpCode")
+    @DynamoDBHashKey(attributeName = "otpCode")
     public Long getOtpCode() {
         return otpCode;
     }
-    @DynamoDbSecondaryPartitionKey(indexNames = "userId-index")
-    @DynamoDbAttribute("userId")
+
+    @DynamoDBIndexHashKey(
+            globalSecondaryIndexName = "userId-index",
+            attributeName = "userId"
+    )
     public String getUserId() {
         return userId;
     }
 
-
-    @DynamoDbAttribute("purpose")
+    @DynamoDBAttribute(attributeName = "purpose")
     public String getPurpose() {
         return purpose;
     }
 
-
-    @DynamoDbAttribute("expireAt")
+    @DynamoDBAttribute(attributeName = "expireAt")
     public Date getExpireAt() {
         return expireAt;
     }
 
-
-    @DynamoDbAttribute("isUsed")
+    @DynamoDBAttribute(attributeName = "isUsed")
     public boolean isUsed() {
         return isUsed;
     }
 
-    @DynamoDbAttribute("verifiedAt")
+    @DynamoDBAttribute(attributeName = "verifiedAt")
     public Date getVerifiedAt() {
         return verifiedAt;
     }
-
 }

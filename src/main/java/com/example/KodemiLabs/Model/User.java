@@ -1,14 +1,18 @@
 package com.example.KodemiLabs.Model;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum;
+import com.example.KodemiLabs.enums.Role;
 import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
 import java.util.Date;
 
-@DynamoDbBean
+
 @DynamoDBTable(tableName = "user")
-@Setter
+@DynamoDbBean
 @NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class User {
 
     private String userId;
@@ -19,45 +23,52 @@ public class User {
     private boolean isActive;
     private boolean isVerified;
     private Date lastLogin;
+    private Role role;
 
     @DynamoDbPartitionKey
-    @DynamoDbAttribute("userId")
+    @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
 
-    @DynamoDbAttribute("Username")
+    @DynamoDBAttribute(attributeName = "name")
     public String getName() {
         return name;
     }
 
-    @DynamoDbAttribute("email")
+    @DynamoDBAttribute(attributeName = "email")
     public String getEmail() {
         return email;
     }
 
-    @DynamoDbAttribute("username")
+    @DynamoDBAttribute(attributeName = "username")
     public String getUsername() {
         return username;
     }
 
-    @DynamoDbAttribute("passwordHash")
+    @DynamoDBAttribute(attributeName = "passwordHash")
     public String getPasswordHash() {
         return passwordHash;
     }
 
-    @DynamoDbAttribute("isActive")
+    @DynamoDBAttribute(attributeName = "isActive")
     public boolean isActive() {
         return isActive;
     }
 
-    @DynamoDbAttribute("isVerified")
+    @DynamoDBAttribute(attributeName = "isVerified")
     public boolean isVerified() {
         return isVerified;
     }
 
-    @DynamoDbAttribute("lastLogin")
+    @DynamoDBAttribute(attributeName = "lastLogin")
     public Date getLastLogin() {
         return lastLogin;
     }
+    @DynamoDBTypeConvertedEnum
+    @DynamoDBAttribute(attributeName = "role")
+    public Role getRole() {
+        return role;
+    }
+
 }

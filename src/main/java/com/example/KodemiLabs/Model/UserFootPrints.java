@@ -1,17 +1,12 @@
 package com.example.KodemiLabs.Model;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import lombok.*;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.Instant;
 
-@DynamoDbBean
 @DynamoDBTable(tableName = "FootPrints")
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@Setter
 public class UserFootPrints {
 
     private String sessionId;
@@ -21,37 +16,36 @@ public class UserFootPrints {
     private Instant loginTime;
     private Instant lastActivity;
 
-    @DynamoDbPartitionKey
-    @DynamoDbAttribute("sessionId")
+    @DynamoDBHashKey(attributeName = "sessionId")
     public String getSessionId() {
         return sessionId;
     }
 
-    @DynamoDbSecondaryPartitionKey(indexNames = "userId-index")
-    @DynamoDbAttribute("userId")
+    @DynamoDBIndexHashKey(
+            globalSecondaryIndexName = "userId-index",
+            attributeName = "userId"
+    )
     public String getUserId() {
         return userId;
     }
 
-    @DynamoDbAttribute("sessionToken")
+    @DynamoDBAttribute(attributeName = "sessionToken")
     public String getSessionToken() {
         return sessionToken;
     }
 
-    @DynamoDbAttribute("isActive")
+    @DynamoDBAttribute(attributeName = "isActive")
     public Boolean getIsActive() {
         return isActive;
     }
 
-    @DynamoDbAttribute("loginTime")
+    @DynamoDBAttribute(attributeName = "loginTime")
     public Instant getLoginTime() {
         return loginTime;
     }
 
-    @DynamoDbAttribute("lastActivity")
+    @DynamoDBAttribute(attributeName = "lastActivity")
     public Instant getLastActivity() {
         return lastActivity;
     }
-
-
 }

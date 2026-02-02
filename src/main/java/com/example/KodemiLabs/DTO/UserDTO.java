@@ -1,8 +1,7 @@
 package com.example.KodemiLabs.DTO;
-
-
 import lombok.*;
 
+@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,4 +11,5 @@ public class UserDTO {
     private String name;
     private String email;
     private String username;
+
 }

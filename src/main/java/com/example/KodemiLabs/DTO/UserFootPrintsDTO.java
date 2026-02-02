@@ -1,4 +1,4 @@
-package com.example.KodemiLabs.Model;
+package com.example.KodemiLabs.DTO;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbAttribute;
@@ -7,12 +7,14 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbSecondaryPartitionKey;
 import java.time.Instant;
 
-@DynamoDbBean
+@Data
 @DynamoDBTable(tableName = "FootPrints")
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserFootPrints {
+@DynamoDbBean
+public class UserFootPrintsDTO {
 
     private String sessionId;
     private String sessionToken;
@@ -26,18 +28,15 @@ public class UserFootPrints {
     public String getSessionId() {
         return sessionId;
     }
-
     @DynamoDbSecondaryPartitionKey(indexNames = "userId-index")
     @DynamoDbAttribute("userId")
     public String getUserId() {
         return userId;
     }
-
     @DynamoDbAttribute("sessionToken")
     public String getSessionToken() {
         return sessionToken;
     }
-
     @DynamoDbAttribute("isActive")
     public Boolean getIsActive() {
         return isActive;
@@ -52,6 +51,5 @@ public class UserFootPrints {
     public Instant getLastActivity() {
         return lastActivity;
     }
-
 
 }

@@ -18,7 +18,7 @@ public class JwtService {
     private Key getKey() {
         return secretKey;
     }
-    // Generating token form the below method
+
     public String generateToken(String username) {
 
         Map<String, Object> claims = new HashMap<>();
@@ -38,7 +38,6 @@ public class JwtService {
         return extractAllClaims(token).getSubject();
     }
 
-    //Verifying  the token
     public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername())

@@ -1,11 +1,11 @@
 package com.example.KodemiLabs.Controller;
-import com.example.KodemiLabs.Service.LearnerService;
+import com.example.KodemiLabs.Service.UserService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LearnerController {
+public class UserController {
 
-    private LearnerService learnerService;
+    private UserService learnerService;
 
     
 

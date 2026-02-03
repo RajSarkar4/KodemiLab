@@ -1,7 +1,11 @@
 package com.example.KodemiLabs.Model;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbIgnoreNulls;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @DynamoDBTable(tableName = "OTP")
@@ -11,10 +15,11 @@ public class OTP {
 
     private String otpCode;
     private String userId;
-    private String purpose;
-    private Date expireAt;
-    private boolean isUsed;
-    private Date verifiedAt;
+    private LocalDateTime expireAt;
+    private boolean enable;
+
+    public OTP(String gotp, String userId, LocalDateTime localDateTime, boolean enable) {
+    }
 
     @DynamoDBHashKey(attributeName = "otpCode")
     public String getOtpCode() {
@@ -29,23 +34,13 @@ public class OTP {
         return userId;
     }
 
-    @DynamoDBAttribute(attributeName = "purpose")
-    public String getPurpose() {
-        return purpose;
-    }
-
     @DynamoDBAttribute(attributeName = "expireAt")
-    public Date getExpireAt() {
+    public LocalDateTime getExpireAt() {
         return expireAt;
     }
 
     @DynamoDBAttribute(attributeName = "isUsed")
-    public boolean isUsed() {
-        return isUsed;
-    }
-
-    @DynamoDBAttribute(attributeName = "verifiedAt")
-    public Date getVerifiedAt() {
-        return verifiedAt;
+    public boolean isEnable() {
+        return enable;
     }
 }

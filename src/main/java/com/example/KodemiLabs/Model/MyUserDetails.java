@@ -10,9 +10,11 @@ import java.util.List;
 public class MyUserDetails implements UserDetails {
 
     private User user;
+    private OTP otp;
 
-    public MyUserDetails(User user) {
+    public MyUserDetails(User user, OTP otp) {
         this.user = user;
+        this.otp = otp;
     }
 
     @Override
@@ -29,6 +31,12 @@ public class MyUserDetails implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
+    @Override
+    public boolean isEnabled() {
+        return otp.isEnable();
+    }
+
 
 
 

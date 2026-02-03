@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class OTPService {
@@ -41,7 +43,6 @@ public class OTPService {
 
             boolean isValid = otpData.getOtpCode().equals(otp);
             if (isValid) {
-                user.setVerified(true);
                 otpRepo.removeOtp(otpData); // one-time use
             }
             return "OTP Verified Successfully";

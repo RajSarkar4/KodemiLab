@@ -1,31 +1,32 @@
 package com.example.KodemiLabs.Service;
 
-
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.example.KodemiLabs.Model.OTP;
 import com.example.KodemiLabs.Model.User;
-import com.example.KodemiLabs.enums.Role;
+import com.example.KodemiLabs.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Service
 public class RegisterService {
+
+    @Autowired
+    private UserRepo userRepo;
+
     @Autowired
     private DynamoDBMapper dynamoDBMapper;
 
     @Autowired
-    private OtpService otpService;
+    private OTPService otpService;
 
     @Autowired
-    private JwtService Jwtservice;
+    private JwtService jwtService;
 
     public void register(User request) {
 
-        // Save USER first
         User user = new User();
         user.setUserId(UUID.randomUUID().toString());
         user.setName(request.getName());
@@ -37,22 +38,17 @@ public class RegisterService {
         user.setActive(true);
         user.setVerified(false);
         user.setRole(user.getRole());
-
         dynamoDBMapper.save(user);
 
-        otpService.generateRegisterOtp(user.getUserId(), user.getEmail());
+        otpService.generateOtp(user.getUserId());
     }
 
-    public String verifyOtpAndLogin(String otpCode) {
-        OTP otp = otpService.verifyRegisterOtp(otpCode);
+    public String verifyOtpAndLogin(String email, String otpCode) {
 
-        User user = dynamoDBMapper.load(User.class, otp.getUserId());
-        user.setVerified(true);
-        user.setLastLogin(new Date());
+        String otp = otpService.verifyOtp(email, otpCode);
+        User user = userRepo.getUserByEmail(email);
         dynamoDBMapper.save(user);
-        otpService.deleteOtp(otp);
-
-        return Jwtservice.generateToken(
+        return jwtService.generateToken(
                 user.getUserId(),
                 user.getEmail(),
                 user.getRole().name()

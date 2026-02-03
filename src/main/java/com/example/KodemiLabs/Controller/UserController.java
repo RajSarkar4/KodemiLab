@@ -1,7 +1,6 @@
 package com.example.KodemiLabs.Controller;
 import com.example.KodemiLabs.Model.User;
 import com.example.KodemiLabs.Service.RegisterService;
-import com.example.KodemiLabs.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

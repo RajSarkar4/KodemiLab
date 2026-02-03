@@ -41,8 +41,11 @@ public class OTPService {
 
             boolean isValid = otpData.getOtpCode().equals(otp);
             if (isValid) {
-                otpRepo.removeOtp(otpData); // one-time use
+                otpRepo.removeOtp(otpData);
+                return "OTP Verified Successfully";// one-time use
+            }else{
+                return "OTP Incorrect";
             }
-            return "OTP Verified Successfully";
+
         }
 }

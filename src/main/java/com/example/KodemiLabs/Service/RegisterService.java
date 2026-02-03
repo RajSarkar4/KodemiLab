@@ -35,7 +35,7 @@ public class RegisterService {
         user.setPasswordHash(
                 BCrypt.hashpw(request.getPasswordHash(), BCrypt.gensalt())
         );
-        user.setActive(true);
+        user.setActive(false);
         user.setVerified(false);
         user.setRole(user.getRole());
         dynamoDBMapper.save(user);

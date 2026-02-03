@@ -1,6 +1,5 @@
 package com.example.KodemiLabs.Service;
 
-import com.example.KodemiLabs.DTO.UserDTO;
 import com.example.KodemiLabs.Model.OTP;
 import com.example.KodemiLabs.Model.User;
 import com.example.KodemiLabs.Repository.OTPRepo;
@@ -9,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class OTPService {
@@ -22,6 +19,7 @@ public class OTPService {
     private  UserRepo userRepo;
 
     private static final int OTP_EXPIRY_MINUTES = 5;
+//    private final Map<String, OTP> otpStore = new ConcurrentHashMap<>();
     private final Random random = new Random();
 
     public void generateOtp(String userId) {

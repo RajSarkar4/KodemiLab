@@ -2,8 +2,21 @@ spring:
   application:
     name: KodemiLabs
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your_email@gmail.com
+    password: your_app_password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 dynamodb:
   access-key: 7qffme
   secret-access-key: b18sws
   endpoint: http://localhost:8000
   region: ap-south-1
+

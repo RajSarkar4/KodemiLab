@@ -19,13 +19,16 @@ public class JwtService {
         return secretKey;
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String userId, String email, String role) {
 
         Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);
+        claims.put("email", email);
+        claims.put("role", role);
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(
                         new Date(System.currentTimeMillis() + 1000 * 60 * 30)

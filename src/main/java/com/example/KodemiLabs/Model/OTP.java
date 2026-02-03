@@ -9,7 +9,7 @@ import java.util.Date;
 @Setter
 public class OTP {
 
-    private Long otpCode;
+    private String otpCode;
     private String userId;
     private String purpose;
     private Date expireAt;
@@ -17,7 +17,7 @@ public class OTP {
     private Date verifiedAt;
 
     @DynamoDBHashKey(attributeName = "otpCode")
-    public Long getOtpCode() {
+    public String getOtpCode() {
         return otpCode;
     }
 

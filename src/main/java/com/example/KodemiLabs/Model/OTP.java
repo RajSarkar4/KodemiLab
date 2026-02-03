@@ -1,41 +1,34 @@
 package com.example.KodemiLabs.Model;
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbIgnoreNulls;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @DynamoDBTable(tableName = "OTP")
+@Data
 @NoArgsConstructor
-@Setter
 public class OTP {
 
     private String otpCode;
     private String userId;
-    private LocalDateTime expireAt;
+    private Long expireAt;
     private boolean enable;
 
-    public OTP(String gotp, String userId, LocalDateTime localDateTime, boolean enable) {
-    }
-
-    @DynamoDBHashKey(attributeName = "otpCode")
+    @DynamoDBIndexHashKey(
+            attributeName = "otpCode",
+            globalSecondaryIndexName = "otpcode-index"
+    )
     public String getOtpCode() {
         return otpCode;
     }
 
-    @DynamoDBIndexHashKey(
-            globalSecondaryIndexName = "userId-index",
-            attributeName = "userId"
-    )
+    @DynamoDBHashKey(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
 
-    @DynamoDBAttribute(attributeName = "expireAt")
-    public LocalDateTime getExpireAt() {
+    @DynamoDBAttribute
+    public Long getExpireAt() {
         return expireAt;
     }
 

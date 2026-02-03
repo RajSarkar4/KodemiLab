@@ -27,6 +27,7 @@ public class DynamoDBConfig {
     public DynamoDBMapper dynamoDBMapper(AmazonDynamoDB amazonDynamoDB) {
         return new DynamoDBMapper(amazonDynamoDB);
     }
+    @Bean
     protected AmazonDynamoDB buildAmazonDynamoDB() {
 
         return AmazonDynamoDBClientBuilder.standard()

@@ -36,8 +36,8 @@ public class SecurityConfig {
         http.csrf(customizer -> customizer.disable())
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/user/register").permitAll()
+                        .requestMatchers("/user/verifyOtp").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(ssession->

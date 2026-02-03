@@ -1,13 +1,12 @@
 package com.example.KodemiLabs.Service;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.example.KodemiLabs.Model.OTP;
 import com.example.KodemiLabs.Model.User;
 import com.example.KodemiLabs.Repository.UserRepo;
+import com.example.KodemiLabs.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -17,15 +16,16 @@ public class RegisterService {
     private UserRepo userRepo;
 
     @Autowired
-    private DynamoDBMapper dynamoDBMapper;
-
-    @Autowired
     private OTPService otpService;
 
     @Autowired
     private JwtService jwtService;
 
     public void register(User request) {
+
+        if (userRepo.getUserByEmail(request.getEmail()) != null) {
+            throw new RuntimeException("Email already registered");
+        }
 
         User user = new User();
         user.setUserId(UUID.randomUUID().toString());
@@ -35,19 +35,24 @@ public class RegisterService {
         user.setPasswordHash(
                 BCrypt.hashpw(request.getPasswordHash(), BCrypt.gensalt())
         );
-        user.setActive(false);
+        user.setActive(true);
         user.setVerified(false);
-        user.setRole(user.getRole());
-        dynamoDBMapper.save(user);
+        user.setRole(Role.LEARNER);
+        user.setLastLogin(null);
 
+        userRepo.save(user);
         otpService.generateOtp(user.getUserId());
     }
 
     public String verifyOtpAndLogin(String email, String otpCode) {
 
-        String otp = otpService.verifyOtp(email, otpCode);
+        otpService.verifyOtp(email, otpCode);
+
         User user = userRepo.getUserByEmail(email);
-        dynamoDBMapper.save(user);
+        user.setVerified(true);
+        user.setLastLogin(Instant.now().toString());
+
+        userRepo.save(user);
 
         return jwtService.generateToken(
                 user.getUserId(),

@@ -1,7 +1,7 @@
 package com.example.KodemiLabs.enums;
 
 public enum Role {
-    USER,
+    LEARNER,
     ADMIN,
     INSTRUCTOR
 }

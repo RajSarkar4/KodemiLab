@@ -6,6 +6,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedEnum;
 import com.example.KodemiLabs.enums.Role;
 import lombok.*;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -22,7 +24,7 @@ public class User {
     private String passwordHash;
     private boolean isActive;
     private boolean isVerified;
-    private Date lastLogin;
+    private LocalDateTime lastLogin;
     private Role role;
 
     @DynamoDbPartitionKey
@@ -62,7 +64,7 @@ public class User {
     }
 
     @DynamoDBAttribute(attributeName = "lastLogin")
-    public Date getLastLogin() {
+    public LocalDateTime getLastLogin() {
         return lastLogin;
     }
     @DynamoDBTypeConvertedEnum

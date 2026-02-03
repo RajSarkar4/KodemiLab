@@ -1,5 +1,4 @@
 package com.example.KodemiLabs.Config;
-
 import com.amazonaws.auth.*;
 import com.amazonaws.client.builder.*;
 import com.amazonaws.services.dynamodbv2.*;
@@ -33,7 +32,7 @@ public class DynamoDBConfig {
         return AmazonDynamoDBClientBuilder.standard()
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(
-                                "http://localhost:8000",   // http://localhost:8000
+                                dynamodbEndpoint,   // http://localhost:8000
                                 dynamodbRegion      // ap-south-1 (any value)
                         ))
                 .withCredentials(

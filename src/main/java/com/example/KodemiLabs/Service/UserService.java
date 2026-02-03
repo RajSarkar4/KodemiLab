@@ -14,6 +14,7 @@ public class UserService {
     private JavaMailSender javaMailSender;
 
 
+
     public void register(User user, String siteURL) {
 
     }

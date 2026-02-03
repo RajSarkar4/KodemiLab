@@ -2,6 +2,7 @@ package com.example.KodemiLabs.Service;
 
 import com.example.KodemiLabs.DTO.UserDTO;
 import com.example.KodemiLabs.Model.OTP;
+import com.example.KodemiLabs.Model.User;
 import com.example.KodemiLabs.Repository.OTPRepo;
 import com.example.KodemiLabs.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,10 @@ public class OTPService {
 
     @Autowired
     private OTPRepo otpRepo;
+    @Autowired
+    private  UserRepo userRepo;
 
     private static final int OTP_EXPIRY_MINUTES = 5;
-//    private final Map<String, OTP> otpStore = new ConcurrentHashMap<>();
     private final Random random = new Random();
 
     public void generateOtp(String userId) {
@@ -28,19 +30,21 @@ public class OTPService {
         otpRepo.newOtp(otp);
     }
 
-        public boolean verifyOtp(String email, String otp) {
-            UserDTO.setUser
-            OTP otpData = otpRepo.getOtpData(userId);
-            if (otpData == null) return false;
+        public String verifyOtp(String email, String otp) {
+
+            User user = userRepo.getUserByEmail(email);
+            if(user == null) throw new RuntimeException("User not Exist");
+            OTP otpData = otpRepo.getOtpData(user.getUserId());
+            if (otpData == null) throw new RuntimeException("Internal Error");
             if (LocalDateTime.now().isAfter(otpData.getExpireAt())) {
                 otpRepo.removeOtp(otpData);
-                return false;
+                return "OTP Expired";
             }
 
             boolean isValid = otpData.getOtpCode().equals(otp);
             if (isValid) {
                 otpRepo.removeOtp(otpData); // one-time use
             }
-            return isValid;
+            return "OTP Verified Successfully";
         }
 }

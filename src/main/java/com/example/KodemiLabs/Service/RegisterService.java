@@ -48,6 +48,7 @@ public class RegisterService {
         String otp = otpService.verifyOtp(email, otpCode);
         User user = userRepo.getUserByEmail(email);
         dynamoDBMapper.save(user);
+
         return jwtService.generateToken(
                 user.getUserId(),
                 user.getEmail(),
